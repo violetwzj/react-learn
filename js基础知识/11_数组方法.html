@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //1.map() 根据原有数组返回一个新数组
+        //需要一个回调函数作为参数，回调函数的返回值会成为新数组中的元素；
+        // 回调函数中有三个参数，当前元素、当前元素索引，当前数组
+        // const arr = [1,1,2,3,4];
+        // const res = arr.map((item, index, array)=>item+2)
+        // console.log(res)
+        // const arr2 = ['violet', 'zhongkl', 'wzj'];
+        // result = arr2.map((item)=>"<li>"+item+"<li/>")
+
+        //2. filter() 返回一个新数组
+        //3. find() 只找到第一个符合条件的item，二者类似
+        //过滤想要的item,根据回调函数的结果来决定是否保留元素，true保留，false不保留
+        // const arr = [1,1,2,3,4];
+        // const result = arr.filter((item)=>item%2 === 0) 
+        // console.log(result)
+
+        //4 reduce()
+        //可以用来合并数组中的元素
+        //需要两个参数，回调函数（指定运算规则：prev 上次运算结果，curr当前值，index索引， arr当前数组），初始值
+        const arr = [1,1,2,3,4];
+        const result = arr.reduce((prev, cur) => 
+        {
+            return prev + cur
+        },0)
+
+
+    </script>
+</body>
+</html>

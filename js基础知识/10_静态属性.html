@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //直接通过类调用的属性和方法称为静态属性和静态方法
+        class Myclass {
+            //这里的叫实例属性；实例方法，要通过new一个实例去调用
+            name = 'hh';
+            fn = () => {
+                console.log('hanshu')
+            }
+
+            //使用static开头属性时静态方法，静态属性
+            static age = 19;
+        }
+
+        //用static声明之后，可以直接通过类调用
+        console.log(Myclass.age)
+    </script>
+</body>
+</html>
