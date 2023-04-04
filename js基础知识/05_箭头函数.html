@@ -8,9 +8,9 @@
         /*
         *   1.箭头函数中没有arguments
         *   2.箭头函数中没有自己的this
-        *       - 它的this总是外层作用域的this
+        *       - 它的this总是外层作用域的this!!!
         *   3.箭头函数中的this无法通过call()、apply()、bind()修改
-        *   4.箭头函数无法作为构造函数使用
+        *   4.箭头函数没有自己的this,无法作为构造函数使用
         *
         * */
 
@@ -27,13 +27,14 @@
         const fn3 = () => {
             console.log(this);
         };
-
+        //这里的this是window，因为指向其上层作用域，他的上一层没有函数作用域，就是window
         const obj = {
             hello:()=>{
                 console.log(this);
             }
         };
 
+        //这里的this是obj2，因为指向其上层作用域，他的上一层函数作用域，也就是说hello是由obj2调用的，所以this是obj2
         const obj2 = {
             hello:function (){
                 const test = () => {
