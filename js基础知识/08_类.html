@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Myclass{
+            // 类中的所有代码都会在严格模式下执行
+            
+            // 其中严格模式下：通过实例化对象，用方法的形式调用 就是当前实例；
+            //以函数形式执行的时候this不是window,而是undefined
+            // 在开发时，有些场景下希望this固定，不因调用方式改变
+            // 在类中，可以使用箭头函数定义
+            // fn(){
+            //     console.log(this)
+            // }
+            fn = () => {
+                console.log(this)
+            }
+        }
+
+        const mc = new Myclass();
+        mc.fn()
+        const test = mc.fn;
+        test();
+    </script>
+</body>
+</html>

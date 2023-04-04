@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Animal {
+            constructor(name, age){
+                this.name = name;
+                this.age = age;
+            }
+            say = () => {
+                console.log('saysay')
+            }
+        }
+        //使用extends继承一个类，继承后相当于将该类的代码复制到当前类中；
+        //子类继承父类后，可以获得父类中所有的属性和方法，可以重写重名方法
+
+        class Dog extends Animal{
+            //当在子类中重写父类构造函数时，必须在子类构造函数中第一时间调用父类的构造函数，否则会报错
+            constructor(name, age, sex){
+                super(name, age); //调用父类构造函数
+                this.sex = sex
+            }
+            say = () =>{
+                console.log('wwww')
+            }
+        }
+
+        class Snake extends Animal{
+            constructor(name, age){
+                this.name = name;
+                this.age = age;
+            }
+            say = () => {
+                console.log('sss')
+            }
+        }
+
+
+    </script>
+</body>
+</html>

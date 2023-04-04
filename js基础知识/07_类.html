@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 类是对象的模板
+        // 类决定了一个对象中有哪些属性和方法
+        // 使用class类来定义一个类
+        class Person{
+            // //可以直接在类中定义属性;缺点是直接定义会不便于修改，所以用构造函数定义；
+            // name = 'violet';
+            // age = 18;
+            
+            //构造函数
+            //当我们通过new创建对象时，实际上就是在调用类的构造函数
+            //在构造函数中，可以通过this引用当前的对象
+            constructor(name, age){
+                this.name = name;
+                this.age = age;
+            }
+
+
+
+            // 定义实例方法
+            run(){
+                console.log('test')
+            }
+        }
+        const person = new Person('violet', 18);
+        // person.run()
+        // console.log(person)
+    </script>
+</body>
+</html>
