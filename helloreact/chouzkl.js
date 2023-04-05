@@ -1,3 +1,3 @@
 function chouzkl() {
-    console.log('讨厌')
+    console.log('讨厌1')
 }
