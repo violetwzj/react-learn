@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script/react.development.js"></script>
+    <!-- //引入reactdom库 -->
+    <script src="script/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        //创建一个react元素
+        // React.createElement('button', {}, 'click')
+        // 参数1：元素的名称（html标签，必须小写）
+        // 参数2：标签的属性 
+        //        -class属性需要修改成className
+        //        -在设置事件，属性名需要修改成驼峰命名法
+        // 参数3：元素的内容（子元素）
+        // 注意：react元素最终会通过虚拟dom转换成为dom元素；
+        const button = React.createElement('button', {id:'btn', type:'button'}, 'click');
+        //获取根元素
+        const root = ReactDOM.createRoot(document.getElementById('root'))
+        //将元素在根元素中渲染
+        root.render(button);
+    
+    </script>
+</body>
+</html>
