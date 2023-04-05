@@ -20,6 +20,7 @@
         //        -在设置事件，属性名需要修改成驼峰命名法
         // 参数3：元素的内容（子元素）
         // 注意：react元素最终会通过虚拟dom转换成为dom元素；
+        //       react元素一旦创建就无法修改，只能通过新创建的元素进行替换
         const button = React.createElement('button', {id:'btn', type:'button'}, 'click');
         //获取根元素
         const root = ReactDOM.createRoot(document.getElementById('root'))
