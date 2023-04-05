@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script/babel.min.js"></script>
+    <script src="script/react.development.js"></script>
+    <!-- //引入reactdom库 -->
+    <script src="script/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        // 1.jsx不是字符串，不需要加引号
+        // 2.jsx中html标签应该小写，React组件应该大写
+        // 3.可以使用{}嵌入表达式、
+        //      有值得语句就是表达式
+        //      如果表达式是空值，布尔值，undefined这些，将不会被显示
+        // 4.jsx中有且只有一个根标签
+        // 5.jsx中，属性可以直接在标签中设置 ；
+        // class改为className;style写成对象形式
+        const button = <button>click</button>;
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(button);
+    
+    
+    </script>
+</body>
+</html>
