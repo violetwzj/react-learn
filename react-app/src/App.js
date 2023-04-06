@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Meals from "./components/Meals/Meals";
-
+import CartContext from "./store/CartContext";
+import FilterMeals from "./components/FilterMeals/FilterMeals";
 //创建一组食物数据
 const MEALS_DATA = [
     {
@@ -53,13 +54,66 @@ const MEALS_DATA = [
 const App = () => {
     //创建一个state用来存储食物列表
     const [mealsData, setMealsData] = useState(MEALS_DATA)
+    // 创建一个state用来存储食物列表数据
+    // 1.商品[];
+    // 2.商品总数（total amount)
+    // 3.商品总价（totalPrice)
+    const [carData, setCarData] = useState(
+        {
+            items : [],
+            totalAmount : 0,
+            totalPrice : 0
+        }
+    )
 
+    //向购物车添加商品
+    const addItem = (meal) =>{
+        //meal是要添加到购物车的商品
+        //对购物车进行复制
+        //可以用扩展运算符实现对购物车数据的浅复制
+        const newCart = {...carData};
+
+        //将meal添加到购物车中
+        //但是要判断这个商品是否已经在购物车里了，如果已经存在，那么可以直接加数量，而不需要items里添加
+        if(newCart.items.indexOf(meal)===-1){
+            //将meal添加到购物车里
+            newCart.items.push(meal);
+            //修改商品的数量
+            meal.amount = 1;
+        }else{
+            meal.amount += 1;
+        }
+        //不管什么情况，购物车的总数一定是恒定+1；
+        newCart.totalAmount ++;
+        newCart.totalPrice += meal.price;
+        // 重新设置购物车
+        setCarData(newCart)
+    }
+    const removeItem = (meal) => {
+        //对购物车进行复制
+        const newCart = {...carData};
+        meal.amount --;
+        //检查商品数量是否归零；
+        if (meal.amount === 0){
+            newCart.items.splice(newCart.items.indexOf(meal),1);
+
+        }
+        //修改商品总数和总金额
+        newCart.totalAmount -= 1;
+        newCart.totalPrice -= meal.price
+        setCarData(newCart)
+    }
 
 
     return (
-        <div>
-            <Meals mealsData={mealsData}/>
-        </div>
+        <CartContext.Provider value={{...carData,addItem,removeItem}}>
+            <div>
+                <FilterMeals/>
+                <Meals 
+                mealsData={mealsData}
+                />
+            </div>
+        </CartContext.Provider>
     )
 }
 export default App

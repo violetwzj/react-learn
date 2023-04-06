@@ -6,7 +6,10 @@ const Meals = (props) => {
         // 将滚动条设置给Meals
         <div className={classes.Meals}>
             {props.mealsData.map((item) => 
-            <Meal key={item.id} meal={item}/>)}
+            <Meal 
+            key={item.id} 
+            meal={item}
+            />)}
         </div>
     )
 }
