@@ -10,6 +10,9 @@ const CartContext = React.createContext({
     },
     removeItem: () =>{
         
+    },
+    clearCart: ()=>{
+
     }
 })
 export default CartContext;

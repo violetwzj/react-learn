@@ -2,6 +2,9 @@ import React, {useState} from "react";
 import Meals from "./components/Meals/Meals";
 import CartContext from "./store/CartContext";
 import FilterMeals from "./components/FilterMeals/FilterMeals";
+import Cart from "./components/Cart/Cart";
+import Confirm from "./components/UI/Confirm/Confirm";
+// import Backdrop from "./components/UI/Backdrop/Backdrop";
 //创建一组食物数据
 const MEALS_DATA = [
     {
@@ -66,6 +69,14 @@ const App = () => {
         }
     )
 
+    //创建一个过滤meals的函数
+    const filterHandler = (keyword) => {
+        const newMealsData = MEALS_DATA.filter(item => item.title.indexOf(keyword) !== -1)
+        setMealsData(newMealsData);
+    }
+
+
+
     //向购物车添加商品
     const addItem = (meal) =>{
         //meal是要添加到购物车的商品
@@ -104,14 +115,26 @@ const App = () => {
         setCarData(newCart)
     }
 
+    //清空购物车
+    const clearCart = ()=>{
+        const newCart = {...carData};
+        newCart.items.forEach(item=>delete item.amount)
+        newCart.items = [];
+        newCart.totalAmount = 0;
+        newCart.totalPrice = 0;
+        setCarData(newCart)
+    }
 
     return (
-        <CartContext.Provider value={{...carData,addItem,removeItem}}>
+        <CartContext.Provider value={{...carData,addItem,removeItem,clearCart}}>
+            {/* <Confirm/> */}
             <div>
-                <FilterMeals/>
+                <FilterMeals onFilter={filterHandler}/>
                 <Meals 
                 mealsData={mealsData}
                 />
+                <Cart/>
+                {/* <Backdrop/> */}
             </div>
         </CartContext.Provider>
     )
