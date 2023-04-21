@@ -22,11 +22,14 @@ const Counter= (props) => {
 
     //添加购物车的函数
     const addButtonHander = () =>{
-        ctx.addItem(props.meal)
+        // ctx.addItem(props.meal);
+        ctx.cartDispatch({type: 'ADD', meal: props.meal})
     }
     //删除食物的函数
     const subButtonHander = () =>{
-        ctx.removeItem(props.meal)
+        // ctx.removeItem(props.meal);
+        ctx.cartDispatch({type: 'SUB',meal: props.meal})
+
     }
     return (
         <div className={classes.Counter}>

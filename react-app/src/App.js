@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useReducer} from "react";
 import Meals from "./components/Meals/Meals";
 import CartContext from "./store/CartContext";
 import FilterMeals from "./components/FilterMeals/FilterMeals";
@@ -54,6 +54,52 @@ const MEALS_DATA = [
     }
 ];
 
+// 在组件外部定义一个reducer,
+const cartReducer = (state, action) => {
+    //meal是要添加到购物车的商品
+    //对购物车进行复制
+    //可以用扩展运算符实现对购物车数据的浅复制
+    const newCart = {...state};
+    switch(action.type){
+        default:
+            return state;
+        case 'ADD':
+            //将meal添加到购物车中
+            //但是要判断这个商品是否已经在购物车里了，如果已经存在，那么可以直接加数量，而不需要items里添加
+            if(newCart.items.indexOf(action.meal)===-1){
+                //将meal添加到购物车里
+                newCart.items.push(action.meal);
+                //修改商品的数量
+                action.meal.amount = 1;
+            }else{
+                action.meal.amount += 1;
+            }
+            //不管什么情况，购物车的总数一定是恒定+1；
+            newCart.totalAmount ++;
+            newCart.totalPrice += action.meal.price;
+            // 重新设置购物车
+            return newCart
+        case 'SUB':
+            action.meal.amount --;
+            //检查商品数量是否归零；
+            if (action.meal.amount === 0){
+                newCart.items.splice(newCart.items.indexOf(action.meal),1);
+    
+            }
+            //修改商品总数和总金额
+            newCart.totalAmount -= 1;
+            newCart.totalPrice -= action.meal.price;
+            return newCart;
+        case 'CLEAR':
+            newCart.items.forEach(item=>delete item.amount)
+            newCart.items = [];
+            newCart.totalAmount = 0;
+            newCart.totalPrice = 0;
+            return newCart
+
+    }
+}
+
 const App = () => {
     //创建一个state用来存储食物列表
     const [mealsData, setMealsData] = useState(MEALS_DATA)
@@ -61,12 +107,20 @@ const App = () => {
     // 1.商品[];
     // 2.商品总数（total amount)
     // 3.商品总价（totalPrice)
-    const [carData, setCarData] = useState(
-        {
-            items : [],
-            totalAmount : 0,
-            totalPrice : 0
-        }
+    // const [carData, setCarData] = useState(
+    //     {
+    //         items : [],
+    //         totalAmount : 0,
+    //         totalPrice : 0
+    //     }
+    // )
+
+    const [carData, cartDispatch] = useReducer(cartReducer,{
+        items:[],
+        totalAmount: 0,
+        totalPrice:0
+    }
+
     )
 
     //创建一个过滤meals的函数
@@ -77,56 +131,56 @@ const App = () => {
 
 
 
-    //向购物车添加商品
-    const addItem = (meal) =>{
-        //meal是要添加到购物车的商品
-        //对购物车进行复制
-        //可以用扩展运算符实现对购物车数据的浅复制
-        const newCart = {...carData};
+    // //向购物车添加商品
+    // const addItem = (meal) =>{
+    //     //meal是要添加到购物车的商品
+    //     //对购物车进行复制
+    //     //可以用扩展运算符实现对购物车数据的浅复制
+    //     const newCart = {...carData};
 
-        //将meal添加到购物车中
-        //但是要判断这个商品是否已经在购物车里了，如果已经存在，那么可以直接加数量，而不需要items里添加
-        if(newCart.items.indexOf(meal)===-1){
-            //将meal添加到购物车里
-            newCart.items.push(meal);
-            //修改商品的数量
-            meal.amount = 1;
-        }else{
-            meal.amount += 1;
-        }
-        //不管什么情况，购物车的总数一定是恒定+1；
-        newCart.totalAmount ++;
-        newCart.totalPrice += meal.price;
-        // 重新设置购物车
-        setCarData(newCart)
-    }
-    const removeItem = (meal) => {
-        //对购物车进行复制
-        const newCart = {...carData};
-        meal.amount --;
-        //检查商品数量是否归零；
-        if (meal.amount === 0){
-            newCart.items.splice(newCart.items.indexOf(meal),1);
+    //     //将meal添加到购物车中
+    //     //但是要判断这个商品是否已经在购物车里了，如果已经存在，那么可以直接加数量，而不需要items里添加
+    //     if(newCart.items.indexOf(meal)===-1){
+    //         //将meal添加到购物车里
+    //         newCart.items.push(meal);
+    //         //修改商品的数量
+    //         meal.amount = 1;
+    //     }else{
+    //         meal.amount += 1;
+    //     }
+    //     //不管什么情况，购物车的总数一定是恒定+1；
+    //     newCart.totalAmount ++;
+    //     newCart.totalPrice += meal.price;
+    //     // 重新设置购物车
+    //     setCarData(newCart)
+    // }
+    // const removeItem = (meal) => {
+    //     //对购物车进行复制
+    //     const newCart = {...carData};
+    //     meal.amount --;
+    //     //检查商品数量是否归零；
+    //     if (meal.amount === 0){
+    //         newCart.items.splice(newCart.items.indexOf(meal),1);
 
-        }
-        //修改商品总数和总金额
-        newCart.totalAmount -= 1;
-        newCart.totalPrice -= meal.price
-        setCarData(newCart)
-    }
+    //     }
+    //     //修改商品总数和总金额
+    //     newCart.totalAmount -= 1;
+    //     newCart.totalPrice -= meal.price
+    //     // setCarData(newCart)
+    // }
 
     //清空购物车
-    const clearCart = ()=>{
-        const newCart = {...carData};
-        newCart.items.forEach(item=>delete item.amount)
-        newCart.items = [];
-        newCart.totalAmount = 0;
-        newCart.totalPrice = 0;
-        setCarData(newCart)
-    }
+    // const clearCart = ()=>{
+    //     const newCart = {...carData};
+    //     newCart.items.forEach(item=>delete item.amount)
+    //     newCart.items = [];
+    //     newCart.totalAmount = 0;
+    //     newCart.totalPrice = 0;
+    //     // setCarData(newCart)
+    // }
 
     return (
-        <CartContext.Provider value={{...carData,addItem,removeItem,clearCart}}>
+        <CartContext.Provider value={{...carData, cartDispatch}}>
             {/* <Confirm/> */}
             <div>
                 <FilterMeals onFilter={filterHandler}/>

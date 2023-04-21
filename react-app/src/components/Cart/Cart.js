@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classes from './Cart.module.css';
 import iconImg from '../../asset/bag.png';
 import CartContext from '../../store/CartContext';
@@ -17,7 +17,14 @@ export default function Cart() {
   //   //购物车已经被清空
   //   setshowDetails(false);
   // }
-
+  useEffect(()=>{
+    if(ctx.totalAmount===0){
+      // 购物车已经被清空
+      setshowDetails(false)
+      setShowCheckout(false)
+    }
+    // 空数组的话只会在组件初始化时触发一次
+  },[ctx])
   //添加一个函数用来控制是否显示详情页函数
   const toggleDetailsHandler = () =>{
     if(ctx.totalAmount===0){

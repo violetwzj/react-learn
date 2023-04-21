@@ -25,7 +25,7 @@ export default function CartDetails(){
   }
   const OKHandler = () => {
     //清空购物车
-    ctx.clearCart();
+    ctx.cartDispatch({type:'CLEAR'})
   }
 
   return (
