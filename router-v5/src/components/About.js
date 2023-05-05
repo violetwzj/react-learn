@@ -1,7 +1,10 @@
 import React from 'react'
+import Hello from './Hello';
+import { Redirect, Route, useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min'
 
 export default function About(props) {
 
+  const {path} = useRouteMatch();
   const clickHandler = () =>{
     //push需要一个location作为参数
     // props.history.push({
@@ -14,6 +17,8 @@ export default function About(props) {
   }
   return (
     <div>
+      {/* 用于跳转页面 */}
+      <Redirect to={'/form'}/>
       <button onClick={clickHandler}>点我一下</button>
       <h1>
       About
@@ -24,6 +29,9 @@ export default function About(props) {
         <li>沙和尚</li>
         <li>唐僧</li>
       </ul>
+      <Route path={`${path}/hello`}>
+        <Hello/>
+      </Route>
     </div>
   )
 }
